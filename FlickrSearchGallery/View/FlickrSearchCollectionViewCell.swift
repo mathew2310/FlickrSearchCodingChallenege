@@ -11,7 +11,6 @@ class FlickrSearchCollectionViewCell: UICollectionViewCell {
     
     
     @IBOutlet weak var flickImage: UIImageView!
-    
     @IBOutlet weak var imgDesc: UILabel!
     
     override func prepareForReuse() {

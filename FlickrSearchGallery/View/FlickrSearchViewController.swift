@@ -15,7 +15,6 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate{
     @IBOutlet weak var searchBar: UISearchBar!
     let pendingOperations = PendingOperations()
 
-    
     private var bindings = Set<AnyCancellable>()
         
     private let viewModel:FlickrSearchViewModelType = FlickrSearchViewModel(networkManager: NetworkManager())
@@ -78,7 +77,7 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate{
 extension FlickrSearchViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.photoDetailsCount
+        return viewModel.flickrDetailsCount
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let collectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? FlickrSearchCollectionViewCell else {return UICollectionViewCell()}
@@ -101,14 +100,14 @@ extension FlickrSearchViewController : UICollectionViewDelegate, UICollectionVie
         return collectionCell
     }
     
-    func startDownload(for photoRecord: FlickrRecord, at indexPath: IndexPath) {
+    func startDownload(for flickrRecord: FlickrRecord, at indexPath: IndexPath) {
       //1
       guard pendingOperations.downloadsInProgress[indexPath] == nil else {
         return
       }
       
       //2
-      let downloader = ImageDownloader(photoRecord)
+      let downloader = ImageDownloader(flickrRecord)
       //3
       downloader.completionBlock = {
         if downloader.isCancelled {

@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - FlickrSearchResonce.swift
-struct FlickrSearchResonce: Codable {
+struct FlickrSearchResponce: Codable {
     let photos: Photos
     let stat: String
 }

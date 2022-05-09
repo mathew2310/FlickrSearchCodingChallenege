@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol Networking {
-    func doApiCall(apiRequest:Requestable)-> Future<[FlickrDetail], ServiceError>
+    func doApiCall(apiRequest:Requestable)-> Future<[FlickrDetail], NetworkError>
 }
 
 class NetworkManager: Networking {
@@ -18,29 +18,29 @@ class NetworkManager: Networking {
         self.session = session
     }
     
-    func doApiCall(apiRequest: Requestable) -> Future<[FlickrDetail], ServiceError> {
+    func doApiCall(apiRequest: Requestable) -> Future<[FlickrDetail], NetworkError> {
         return Future { [weak self] promise in
             guard let request = URLRequest.getURLRequest(for: apiRequest) else {
-                promise(.failure(ServiceError.failedToCreateRequest))
+                promise(.failure(NetworkError.failedToCreateRequest))
                 return
             }
             self?.session.dataTask(with: request, completionHandler: { data, response, error in
                 guard let httpResponse = response as? HTTPURLResponse, 200..<300 ~= httpResponse.statusCode else {
-                    return promise(.failure(ServiceError.dataNotFound))
+                    return promise(.failure(NetworkError.dataNotFound))
                 }
                 guard let _data = data, error == nil else {
-                    return promise(.failure(ServiceError.dataNotFound))
+                    return promise(.failure(NetworkError.dataNotFound))
                 }
              
-                guard let decodedResponse = try? JSONDecoder().decode(FlickrSearchResonce.self, from: _data) else {
-                    return promise(.failure(ServiceError.parsingError))
+                guard let decodedResponse = try? JSONDecoder().decode(FlickrSearchResponce.self, from: _data) else {
+                    return promise(.failure(NetworkError.parsingError))
                 }
                 
-               let phototsDetails = decodedResponse.photos.photo.map {
+               let flickrDetails = decodedResponse.photos.photo.map {
                    FlickrDetail( title: $0.title, url: "\(APIEndPoints.imagesBaseUrl)/\($0.server)/\($0.id)_\($0.secret)_w.jpg")
                 }
             
-                return promise(.success(phototsDetails))
+                return promise(.success(flickrDetails))
             }).resume()
         }
     }

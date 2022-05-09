@@ -19,7 +19,7 @@ struct Request:Requestable {
     var params: [String : String]
 }
 
-enum ServiceError: Error {
+enum NetworkError: Error {
     case failedToCreateRequest
     case dataNotFound
     case parsingError

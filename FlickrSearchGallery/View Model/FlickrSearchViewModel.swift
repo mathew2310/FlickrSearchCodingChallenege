@@ -14,7 +14,7 @@ import Combine
 
 protocol FlickrSearchViewModelType {
     var stateBinding: Published<ViewState>.Publisher { get }
-    var photoDetailsCount:Int { get }
+    var flickrDetailsCount:Int { get }
     var flickrDetails:[FlickrDetail] { get }
     var flickrRecords:[FlickrRecord] { get }
 
@@ -34,7 +34,7 @@ final class FlickrSearchViewModel: FlickrSearchViewModelType {
     var flickrRecords:[FlickrRecord] = []
     
 
-    var photoDetailsCount: Int {
+    var flickrDetailsCount: Int {
         return flickrDetails.count
     }
     
