@@ -8,52 +8,29 @@
 import Foundation
 import UIKit
 
-enum FlickrRecordState {
-  case new, downloaded, failed
+protocol ImageOperations {
+    
 }
-
-
-
-class FlickrRecord {
-  let name: String
-  let url: String
-  var state = FlickrRecordState.new
-  var image = UIImage(named: "Placeholder")
-  
-  init(name:String, url:String) {
-    self.name = name
-    self.url = url
-  }
-}
-
-class ImageDownloader: Operation {
-    //1
+class ImageDownloader: Operation, ImageOperations {
     let flickrRecord: FlickrRecord
     
-    //2
     init(_ flickrRecord: FlickrRecord) {
       self.flickrRecord = flickrRecord
     }
     
-    //3
     override func main() {
-      //4
       if isCancelled {
         return
       }
-      
-      //5
-        
+              
     guard let url = URL(string: flickrRecord.url) else {return}
         
       guard let imageData = try? Data(contentsOf:url) else { return }
       
-      //6
       if isCancelled {
         return
       }
       
-      //7
       if !imageData.isEmpty {
         flickrRecord.image = UIImage(data:imageData)
         flickrRecord.state = .downloaded
@@ -67,12 +44,14 @@ class ImageDownloader: Operation {
 
 class PendingOperations {
     
-  lazy var downloadsInProgress: [IndexPath: Operation] = [:]
+  lazy var downloadsInProgress: [IndexPath: ImageOperations] = [:]
     
   lazy var downloadQueue: OperationQueue = {
     var queue = OperationQueue()
     queue.name = "Download queue"
-    queue.maxConcurrentOperationCount = 1
+    queue.maxConcurrentOperationCount = 10
     return queue
   }()
 }
+
+

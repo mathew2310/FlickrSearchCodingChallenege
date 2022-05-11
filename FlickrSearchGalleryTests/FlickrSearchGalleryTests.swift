@@ -6,13 +6,16 @@
 //
 
 import XCTest
+import Combine
+
 @testable import FlickrSearchGallery
 
 class PhotoSearchGallaryTests: XCTestCase {
     
     var viewModel:FlickrSearchViewModel!
     var networkManager:MockNetworkManager!
-    
+    private var bindings = Set<AnyCancellable>()
+
     override func setUpWithError() throws {
         
         networkManager = MockNetworkManager()
@@ -49,4 +52,22 @@ class PhotoSearchGallaryTests: XCTestCase {
     }
     
 
+    func testStartImageDownload() {
+        
+        let expected = expectation(description: "callback happened")
+
+        let indexpath = IndexPath(row: 0, section: 0)
+        viewModel.startDownload(imageDownloader:MockImageDownLoader(), at: indexpath)
+        
+        let cancellable =  viewModel.$state.dropFirst().sink { states in
+            expected.fulfill()
+
+        }
+        
+        self.bindings.insert(cancellable)
+
+        wait(for: [expected], timeout: 3)
+
+        XCTAssertEqual(viewModel.state, .refresh([indexpath]))
+    }
 }

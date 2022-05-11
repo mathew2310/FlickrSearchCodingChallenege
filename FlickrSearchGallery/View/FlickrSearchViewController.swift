@@ -11,10 +11,9 @@ import Combine
 class FlickrSearchViewController: UIViewController, UISearchBarDelegate{
 
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-    let pendingOperations = PendingOperations()
-
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     private var bindings = Set<AnyCancellable>()
         
     private let viewModel:FlickrSearchViewModelType = FlickrSearchViewModel(networkManager: NetworkManager())
@@ -39,10 +38,10 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if let text = searchBar.text{
-            self.viewModel.search(request: Request(baseUrl: APIEndPoints.baseUrl, path:"", params: ["method":APIEndPoints.photoMethod, "text": "\(text)", "api_key": APIEndPoints.apiKey, "format" : "json", "nojsoncallback" : "1"]))
+          let request = Request(baseUrl: APIEndPoints.baseUrl, path:"", params: ["method":APIEndPoints.photoMethod, "text":"\(text)", "api_key": APIEndPoints.apiKey, "format" : "json", "nojsoncallback" : "1"])
+
+            self.viewModel.search(request:request)
         }
-        
-        
     }
 
     private func bindViewModelState() {
@@ -61,13 +60,19 @@ class FlickrSearchViewController: UIViewController, UISearchBarDelegate{
             collectionView.isHidden = true
         case .loading:
             collectionView.isHidden = true
+            activityIndicator.startAnimating()
         case .finishedLoading:
             collectionView.isHidden = false
+            activityIndicator.stopAnimating()
             collectionView.reloadData()
-            searchBar.resignFirstResponder()
         case .error(let error):
+            activityIndicator.stopAnimating()
             collectionView.reloadData()
-            searchBar.resignFirstResponder()
+            self.showAlert(message:error)
+
+
+        case .refresh(let indexpaths):
+            self.collectionView.reloadItems(at: indexpaths)
 
         }
     }
@@ -82,8 +87,6 @@ extension FlickrSearchViewController : UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let collectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as? FlickrSearchCollectionViewCell else {return UICollectionViewCell()}
     
-        collectionCell.setData(viewModel.flickrDetails[indexPath.row])
-
         let flickrDetail = viewModel.flickrRecords[indexPath.row]
 
         switch (flickrDetail.state) {
@@ -91,7 +94,8 @@ extension FlickrSearchViewController : UICollectionViewDelegate, UICollectionVie
         case .failed:
             collectionCell.imgDesc?.text = "Failed to load"
         case .new :
-              startDownload(for: flickrDetail, at: indexPath)
+            
+            viewModel.startDownload(imageDownloader: ImageDownloader(flickrDetail), at: indexPath)
           
         case .downloaded :
             collectionCell.flickImage.image = flickrDetail.image
@@ -100,32 +104,6 @@ extension FlickrSearchViewController : UICollectionViewDelegate, UICollectionVie
         return collectionCell
     }
     
-    func startDownload(for flickrRecord: FlickrRecord, at indexPath: IndexPath) {
-      //1
-      guard pendingOperations.downloadsInProgress[indexPath] == nil else {
-        return
-      }
-      
-      //2
-      let downloader = ImageDownloader(flickrRecord)
-      //3
-      downloader.completionBlock = {
-        if downloader.isCancelled {
-          return
-        }
-        
-        DispatchQueue.main.async {
-          self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
-            
-            self.collectionView.reloadItems(at: [indexPath])
-
-        }
-      }
-      //4
-      pendingOperations.downloadsInProgress[indexPath] = downloader
-      //5
-      pendingOperations.downloadQueue.addOperation(downloader)
-    }
     
     func collectionView(_ collectionView: UICollectionView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
@@ -142,7 +120,7 @@ extension FlickrSearchViewController : UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let lay = collectionViewLayout as! UICollectionViewFlowLayout
-        let widthPerItem = collectionView.frame.width / 2 - lay.minimumInteritemSpacing
+        let widthPerItem = collectionView.frame.width / 4 - lay.minimumInteritemSpacing
         
         return CGSize(width:widthPerItem, height:100)
     }

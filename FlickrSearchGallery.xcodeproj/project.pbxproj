@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0454D184282C0C00000A36F8 /* FlickrRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454D183282C0C00000A36F8 /* FlickrRecord.swift */; };
+		0454D186282C0E23000A36F8 /* MockImageDownLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0454D185282C0E23000A36F8 /* MockImageDownLoader.swift */; };
 		2637B12428288E8F00F3B6EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637B12328288E8F00F3B6EB /* AppDelegate.swift */; };
 		2637B12628288E8F00F3B6EB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637B12528288E8F00F3B6EB /* SceneDelegate.swift */; };
 		2637B12828288E8F00F3B6EB /* FlickrSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2637B12728288E8F00F3B6EB /* FlickrSearchViewController.swift */; };
@@ -27,6 +29,7 @@
 		269CA18B2828972C0074D7EB /* APIEndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA18A2828972C0074D7EB /* APIEndPoints.swift */; };
 		269CA18D28289FAA0074D7EB /* SearchSuccessResponce.json in Resources */ = {isa = PBXBuildFile; fileRef = 269CA18C28289FAA0074D7EB /* SearchSuccessResponce.json */; };
 		269CA18F28289FFB0074D7EB /* MockNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269CA18E28289FFB0074D7EB /* MockNetworkManager.swift */; };
+		26E83768282C1E2300556DBA /* Controller+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26E83767282C1E2300556DBA /* Controller+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0454D183282C0C00000A36F8 /* FlickrRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrRecord.swift; sourceTree = "<group>"; };
+		0454D185282C0E23000A36F8 /* MockImageDownLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageDownLoader.swift; sourceTree = "<group>"; };
 		2637B12028288E8F00F3B6EB /* FlickrSearchGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlickrSearchGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2637B12328288E8F00F3B6EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2637B12528288E8F00F3B6EB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +76,7 @@
 		269CA18A2828972C0074D7EB /* APIEndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndPoints.swift; sourceTree = "<group>"; };
 		269CA18C28289FAA0074D7EB /* SearchSuccessResponce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchSuccessResponce.json; sourceTree = "<group>"; };
 		269CA18E28289FFB0074D7EB /* MockNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkManager.swift; sourceTree = "<group>"; };
+		26E83767282C1E2300556DBA /* Controller+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Controller+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +127,7 @@
 		2637B12228288E8F00F3B6EB /* FlickrSearchGallery */ = {
 			isa = PBXGroup;
 			children = (
+				26E83766282C1DFF00556DBA /* Utility */,
 				269CA183282895D00074D7EB /* Network */,
 				269CA182282895400074D7EB /* Model */,
 				269CA17D2828947E0074D7EB /* View Model */,
@@ -140,6 +147,7 @@
 				2637B13A28288E9000F3B6EB /* FlickrSearchGalleryTests.swift */,
 				269CA18C28289FAA0074D7EB /* SearchSuccessResponce.json */,
 				269CA18E28289FFB0074D7EB /* MockNetworkManager.swift */,
+				0454D185282C0E23000A36F8 /* MockImageDownLoader.swift */,
 			);
 			path = FlickrSearchGalleryTests;
 			sourceTree = "<group>";
@@ -160,6 +168,7 @@
 				269CA177282893550074D7EB /* ViewState.swift */,
 				269CA175282891DF0074D7EB /* FlickrSearchCollectionViewCell.swift */,
 				2637B12728288E8F00F3B6EB /* FlickrSearchViewController.swift */,
+				0454D183282C0C00000A36F8 /* FlickrRecord.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,6 +199,14 @@
 				269CA18A2828972C0074D7EB /* APIEndPoints.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		26E83766282C1DFF00556DBA /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				26E83767282C1E2300556DBA /* Controller+Extension.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +351,8 @@
 				269CA1872828968E0074D7EB /* Request.swift in Sources */,
 				269CA189282896DB0074D7EB /* ImageDownloadOperations.swift in Sources */,
 				269CA176282891DF0074D7EB /* FlickrSearchCollectionViewCell.swift in Sources */,
+				0454D184282C0C00000A36F8 /* FlickrRecord.swift in Sources */,
+				26E83768282C1E2300556DBA /* Controller+Extension.swift in Sources */,
 				269CA17B282893CD0074D7EB /* FlickrSearchViewModel.swift in Sources */,
 				269CA18B2828972C0074D7EB /* APIEndPoints.swift in Sources */,
 			);
@@ -345,6 +364,7 @@
 			files = (
 				269CA18F28289FFB0074D7EB /* MockNetworkManager.swift in Sources */,
 				2637B13B28288E9000F3B6EB /* FlickrSearchGalleryTests.swift in Sources */,
+				0454D186282C0E23000A36F8 /* MockImageDownLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +541,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -549,6 +570,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -571,7 +593,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HQ85C2PMCL;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Mathew-Ijidakinro.FlickrSearchGalleryTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -591,7 +613,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HQ85C2PMCL;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Mathew-Ijidakinro.FlickrSearchGalleryTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -17,10 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VLd-DX-irJ">
+                            <searchBar contentMode="redraw" placeholder="Search Image" translatesAutoresizingMaskIntoConstraints="NO" id="VLd-DX-irJ">
                                 <rect key="frame" x="0.0" y="88" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="njr-xk-CCv">
+                                <rect key="frame" x="182" y="423" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="1RD-RQ-1Rb"/>
+                                    <constraint firstAttribute="width" constant="50" id="pkv-J0-e5Q"/>
+                                </constraints>
+                            </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zYh-uC-q5W">
                                 <rect key="frame" x="0.0" y="139" width="414" height="723"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -62,15 +69,18 @@
                         <constraints>
                             <constraint firstItem="zYh-uC-q5W" firstAttribute="top" secondItem="VLd-DX-irJ" secondAttribute="bottom" id="4cM-IE-0VM"/>
                             <constraint firstItem="VLd-DX-irJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4p4-65-NH1"/>
+                            <constraint firstItem="njr-xk-CCv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Hjt-bZ-TbQ"/>
                             <constraint firstItem="zYh-uC-q5W" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KSF-gY-A6P"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zYh-uC-q5W" secondAttribute="bottom" id="Mui-Sx-wdl"/>
                             <constraint firstItem="VLd-DX-irJ" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qgb-gO-8iG"/>
                             <constraint firstItem="VLd-DX-irJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QiT-QK-qMp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zYh-uC-q5W" secondAttribute="trailing" id="uWj-xj-pbP"/>
+                            <constraint firstItem="njr-xk-CCv" firstAttribute="centerX" secondItem="VLd-DX-irJ" secondAttribute="centerX" id="vm8-QQ-fSx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Gallery" id="N3r-t3-LYn"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="njr-xk-CCv" id="l0q-rf-6oH"/>
                         <outlet property="collectionView" destination="zYh-uC-q5W" id="LbG-vq-uih"/>
                         <outlet property="searchBar" destination="VLd-DX-irJ" id="Y76-kX-bqE"/>
                     </connections>

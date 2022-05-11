@@ -8,10 +8,6 @@
 import Foundation
 import Combine
 
-
-import Combine
-
-
 protocol FlickrSearchViewModelType {
     var stateBinding: Published<ViewState>.Publisher { get }
     var flickrDetailsCount:Int { get }
@@ -19,6 +15,7 @@ protocol FlickrSearchViewModelType {
     var flickrRecords:[FlickrRecord] { get }
 
     func search(request: Request)
+    func startDownload(imageDownloader:ImageOperations, at indexPath: IndexPath)
 }
 
 final class FlickrSearchViewModel: FlickrSearchViewModelType {
@@ -33,7 +30,9 @@ final class FlickrSearchViewModel: FlickrSearchViewModelType {
     var flickrDetails:[FlickrDetail] = []
     var flickrRecords:[FlickrRecord] = []
     
+    let pendingOperations = PendingOperations()
 
+    
     var flickrDetailsCount: Int {
         return flickrDetails.count
     }
@@ -65,6 +64,29 @@ final class FlickrSearchViewModel: FlickrSearchViewModelType {
         self.cancellables.insert(cancalable)
     }
     
+    func startDownload(imageDownloader:ImageOperations, at indexPath: IndexPath) {
+        guard pendingOperations.downloadsInProgress[indexPath] == nil else {
+            return
+        }
+        
+        if let downloader = imageDownloader as? Operation {
+        downloader.completionBlock = {
+            if downloader.isCancelled {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pendingOperations.downloadsInProgress.removeValue(forKey: indexPath)
+                
+                self.state = .refresh([indexPath])
+                
+            }
+        }
+            pendingOperations.downloadQueue.addOperation(downloader)
+
+        }
+        pendingOperations.downloadsInProgress[indexPath] = imageDownloader
+    }
     
     deinit {
         cancellables.forEach { cancellable in

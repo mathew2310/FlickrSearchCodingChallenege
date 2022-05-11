@@ -16,10 +16,4 @@ class FlickrSearchCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         self.flickImage.image = nil
     }
-    
-    func setData(_ flickrDetail: FlickrDetail) {
-       // imgDesc.text = flickrDetail.title
-//        let url = URL(string: photoDetail.url)
-//        flickImage.kf.setImage(with:url)
-    }
 }
